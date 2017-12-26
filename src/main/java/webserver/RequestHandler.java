@@ -49,6 +49,15 @@ public class RequestHandler extends Thread {
 
             // 3. post test
 
+            while((line = br.readLine()) != null){
+                if(line.startsWith("userId")){
+                    String queryString = line;
+                    Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
+                    User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
+                    log.debug("User : {}", user);
+                    //url = "/index.html";
+                }
+            }
 
 
             DataOutputStream dos = new DataOutputStream(out);
