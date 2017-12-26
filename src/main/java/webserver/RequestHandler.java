@@ -27,7 +27,7 @@ public class RequestHandler extends Thread {
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
 
-            // 1 test .
+    // 1 test .
             // header 가져오기.
 
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
@@ -50,18 +50,6 @@ public class RequestHandler extends Thread {
 //            }
 
     // 3. post test
-              //1
-//            while((line = br.readLine()) != null){
-//                if(line.startsWith("userId")){
-//                    String queryString = line;
-//                    Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
-//                    User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
-//                    log.debug("User : {}", user);
-//                    url = "./webapp/index.html";
-//                }
-//            }
-
-            //2
             Map<String, String> headers = new HashMap<String, String>();
             while(!"".equals(line)){
                 log.debug("header : {}", line);
@@ -77,7 +65,7 @@ public class RequestHandler extends Thread {
                 User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
                 log.debug("User : {}", user);
                 log.debug("UserId : {}", params.get("userId"));
-                url = "./webapp/index.html";
+                url = "/index.html";
             }
 
 
