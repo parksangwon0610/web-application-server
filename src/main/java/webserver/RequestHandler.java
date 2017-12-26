@@ -50,7 +50,7 @@ public class RequestHandler extends Thread {
 //            }
 
     // 3. post test
-            Map<String, String> headers = new HashMap<String, String>();
+            Map<String, String> headers = new HashMap<>();
             while(!"".equals(line)){
                 log.debug("header : {}", line);
                 line = br.readLine();
@@ -62,7 +62,7 @@ public class RequestHandler extends Thread {
 
             log.debug("Content-length : {}", headers.get("Content-Length"));
 
-            if(url.equals("/user/create")){
+            if(url.startsWith("/user/create")){
                 log.debug("실행");
                 String body = IOUtils.readData(br, Integer.parseInt(headers.get("Content-Length")));
                 log.debug("Request Body : {}" , body);
