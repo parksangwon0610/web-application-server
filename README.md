@@ -15,10 +15,25 @@
 * 각 요구사항을 구현하는 것이 중요한 것이 아니라 구현 과정을 통해 학습한 내용을 인식하는 것이 배움에 중요하다. 
 
 ### 요구사항 1 - http://localhost:8080/index.html로 접속시 응답
-* 
+* try catch 에서 try( InputStream in = ... , OutputStream out = connection.getOutputStream()) 으로 
+* 특정 자원을 사용함에 있어 반드시 closed를 해야한다. 
+* try ()에 자원을 사용하면 try 바디가 끝나고 자동으로 closed 한다.
+* 가능한 이유는 각 스트림마다 Closeable 이라는 인터페이스를 가지고 있기 때문이다.
+
+* BufferedReader 로 InputStream을 한줄씩 읽기위해 
+* BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8")); 를 사용한다.
 
 ### 요구사항 2 - get 방식으로 회원가입
-* 
+* if(url.startsWith("/create")){  // startsWith를 통해 시작정보를 읽어온다.
+*   int index = url.indexOf("?"); // ?의 위치로 시작정보를 알아낸다.
+*   String queryString = url.substring(index+1);
+*   Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
+*   User user = new User(params.get("userId"), 
+*                        params.get("password"), 
+*                        params.get("name"), 
+*                        params.get("email")); // user class로 get 정보를 가져온다.
+*   log.debug("User : {}", user);
+*   url = "/index.html";  // 처리후  index.html 로 이동.
 
 ### 요구사항 3 - post 방식으로 회원가입
 * 
