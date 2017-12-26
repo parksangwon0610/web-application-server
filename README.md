@@ -36,7 +36,25 @@
 *   url = "/index.html";  // 처리후  index.html 로 이동.
 
 ### 요구사항 3 - post 방식으로 회원가입
-* 
+* while(!"".equals(line)){     // 헤더 끝까지 반복
+      log.debug("header : {}", line); 
+      line = br.readLine(); // 라인을 하나씩 읽는다.
+      String[] headerTokens = line.split(": "); // 헤터는 a: b 의 구조이므로 ": " 로 split 한다.
+      if(headerTokens.length == 2) {  // 헤더가 2개로 분리될 경우.
+          headers.put(headerTokens[0], headerTokens[1]); // Map 컬렉션에 put
+      }
+   }
+   
+ * if(url.startsWith("user/create")){
+        String body = IOUtils.readData(br, Integer.parseInt(headers.get("Content-Length")));  
+                // IOUtils.readData(bufferedReader br, int length); 이용 
+        log.debug("Request Body : {}" , body); 
+        Map<String, String> params = HttpRequestUtils.parseQueryString(body); 
+        User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
+        log.debug("User : {}", user);
+
+        url = "/index.html";
+    }
 
 ### 요구사항 4 - redirect 방식으로 이동
 * 
