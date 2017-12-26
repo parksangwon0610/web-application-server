@@ -60,7 +60,9 @@ public class RequestHandler extends Thread {
                 }
             }
 
-            if(url.startsWith("/create")){
+            log.debug("Content-length : {}", headers.get("Content-Length"));
+
+            if(url.startsWith("user/create")){
                 String body = IOUtils.readData(br, Integer.parseInt(headers.get("Content-Length")));
                 log.debug("Request Body : {}" , body);
                 Map<String, String> params = HttpRequestUtils.parseQueryString(body);
