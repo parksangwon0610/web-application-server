@@ -3,12 +3,14 @@ package webserver;
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.Map;
 
 import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
+import util.IOUtils;
 
 public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
@@ -34,7 +36,7 @@ public class RequestHandler extends Thread {
             if(line == null){
                 return;
             }
-            String url = HttpRequestUtils.getUrl(line);
+            String url = HttpRequestUtils.getUrl(line); //  첫라인
 
             // 2 get test.
 
@@ -49,15 +51,32 @@ public class RequestHandler extends Thread {
 
             // 3. post test
 
-            while((line = br.readLine()) != null){
-                if(line.startsWith("userId")){
-                    String queryString = line;
-                    Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
-                    User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
-                    log.debug("User : {}", user);
-                    url = "./webapp/index.html";
-                }
+//            while((line = br.readLine()) != null){
+//                if(line.startsWith("userId")){
+//                    String queryString = line;
+//                    Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
+//                    User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
+//                    log.debug("User : {}", user);
+//                    url = "./webapp/index.html";
+//                }
+//            }
+            Map<String, String> headers = new HashMap<String, String>();
+            while(!"".equals(line)){
+                log.debug("header : {}", line);
+                line = br.readLine();
+                String[] headerTokens = line.split(": ");
+                headers.put(headerTokens[0], headerTokens[1]);
             }
+            if(("user/create".equals(url))) {
+                String body = IOUtils.readData(br, Integer.parseInt(headers.get("Content-Length")));
+                Map<String, String> params = HttpRequestUtils.parseQueryString(body);
+                User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
+                log.debug("User : {}", user);
+
+            }
+
+
+
 
 
             DataOutputStream dos = new DataOutputStream(out);
