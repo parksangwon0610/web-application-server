@@ -68,9 +68,9 @@ public class RequestHandler extends Thread {
                 Map<String, String> params = HttpRequestUtils.parseQueryString(body);
                 User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
                 log.debug("User : {}", user);
+
+                url = "/index.html";
             }
-
-
 
             DataOutputStream dos = new DataOutputStream(out);
             byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
