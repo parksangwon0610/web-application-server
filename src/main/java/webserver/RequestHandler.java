@@ -44,7 +44,7 @@ public class RequestHandler extends Thread {
                 Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
                 User user = new User(params.get("userId"), params.get("password"), params.get("name"), params.get("email"));
                 log.debug("User : {}", user);
-                url = "./webapp//index.html";
+                url = "/index.html";
             }
 
             // 3. post test
