@@ -51,6 +51,7 @@ public class RequestHandler extends Thread {
 
             while((line = br.readLine()) != null){
                 if(line.startsWith("userId")){
+                    System.out.println(line);
                     String queryString = line;
                     Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
                     User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
