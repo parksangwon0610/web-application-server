@@ -67,16 +67,17 @@ public class RequestHandler extends Thread {
                 log.debug("header : {}", line);
                 line = br.readLine();
                 String[] headerTokens = line.split(": ");
-                if(headerTokens.length == 2)
+                if(headerTokens.length == 2) //
                     headers.put(headerTokens[0], headerTokens[1]);
             }
-
+            log.debug("Content-length : {}", headers.get("Content-Length"));
             if(("user/create".equals(url))) {
                 String body = IOUtils.readData(br, Integer.parseInt(headers.get("Content-Length")));
                 Map<String, String> params = HttpRequestUtils.parseQueryString(body);
                 User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
                 log.debug("User : {}", user);
             }
+
 
             //3
             DataOutputStream dos = new DataOutputStream(out);
