@@ -38,7 +38,7 @@ public class RequestHandler extends Thread {
             }
             String url = HttpRequestUtils.getUrl(line); //  첫라인
 
-            // 2 get test.
+    // 2 get test.
 
 //            if(url.startsWith("/create")){
 //                int index = url.indexOf("?");
@@ -49,8 +49,8 @@ public class RequestHandler extends Thread {
 //                url = "/index.html";
 //            }
 
-            // 3. post test
-
+    // 3. post test
+              //1
 //            while((line = br.readLine()) != null){
 //                if(line.startsWith("userId")){
 //                    String queryString = line;
@@ -60,25 +60,25 @@ public class RequestHandler extends Thread {
 //                    url = "./webapp/index.html";
 //                }
 //            }
+
+            //2
             Map<String, String> headers = new HashMap<String, String>();
             while(!"".equals(line)){
                 log.debug("header : {}", line);
                 line = br.readLine();
                 String[] headerTokens = line.split(": ");
-                headers.put(headerTokens[0], headerTokens[1]);
+                if(headerTokens.length == 2)
+                    headers.put(headerTokens[0], headerTokens[1]);
             }
+
             if(("user/create".equals(url))) {
                 String body = IOUtils.readData(br, Integer.parseInt(headers.get("Content-Length")));
                 Map<String, String> params = HttpRequestUtils.parseQueryString(body);
                 User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
                 log.debug("User : {}", user);
-
             }
 
-
-
-
-
+            //3
             DataOutputStream dos = new DataOutputStream(out);
             byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
             response200Header(dos, body.length);
