@@ -38,26 +38,26 @@ public class RequestHandler extends Thread {
 
             // 2 get test.
 
-            if(url.startsWith("/create")){
-                int index = url.indexOf("?");
-                String queryString = url.substring(index+1);
-                Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
-                User user = new User(params.get("userId"), params.get("password"), params.get("name"), params.get("email"));
-                log.debug("User : {}", user);
-                url = "/webapp/index.html";
-            }
+//            if(url.startsWith("/create")){
+//                int index = url.indexOf("?");
+//                String queryString = url.substring(index+1);
+//                Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
+//                User user = new User(params.get("userId"), params.get("password"), params.get("name"), params.get("email"));
+//                log.debug("User : {}", user);
+//                url = "/index.html";
+//            }
 
             // 3. post test
 
-//            while((line = br.readLine()) != null){
-//                if(line.startsWith("userId")){
-//                    String queryString = line;
-//                    Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
-//                    User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
-//                    log.debug("User : {}", user);
-//                    url = "./webapp/index.html";
-//                }
-//            }
+            while((line = br.readLine()) != null){
+                if(line.startsWith("userId")){
+                    String queryString = line;
+                    Map<String, String> params = HttpRequestUtils.parseQueryString(queryString);
+                    User user = new User(params.get("userId"), params.get("password"),params.get("name"), params.get("email"));
+                    log.debug("User : {}", user);
+                    url = "./webapp/index.html";
+                }
+            }
 
 
             DataOutputStream dos = new DataOutputStream(out);
